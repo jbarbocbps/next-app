@@ -29,7 +29,10 @@ export function User() {
         }}
       >
         <Group>
-          <Avatar radius="xl" />
+          <Avatar
+            radius="xl"
+            color="blue"
+          />
           <Box sx={{ flex: 1 }}>
             <Text
               size="sm"

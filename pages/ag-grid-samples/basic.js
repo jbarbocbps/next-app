@@ -4,6 +4,7 @@ import { AgGridReact } from 'ag-grid-react'; // the AG Grid React Component
 
 import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/styles/ag-theme-alpine.css'; // Optional theme CSS
+import 'ag-grid-enterprise';
 
 const Basic = () => {
   const gridRef = useRef(); // Optional - for accessing Grid's API
@@ -11,32 +12,71 @@ const Basic = () => {
 
   // Each Column Definition results in one Column.
   const [columnDefs, setColumnDefs] = useState([
-    { field: 'make', filter: true },
-    { field: 'model', filter: true },
-    { field: 'price' },
+    { field: 'name', filter: true, cellRenderer: 'agGroupCellRenderer' },
+    {
+      field: 'files',
+      valueGetter: (params) => {
+        return `${params.data.files.length} Documents/Files`;
+      },
+      // valueSetter: (params) => {
+      //   params.data.name = params.newValue;
+      //   return true;
+      // },
+    },
+    { field: 'status', filter: true },
   ]);
+
+  useEffect(() => {}, []);
 
   // DefaultColDef sets props common to all Columns
   const defaultColDef = useMemo(() => ({
     sortable: true,
+    // resizable: true,
+    // colResizeDefault: 'shift',
   }));
 
   // Example of consuming Grid Event
   const cellClickedListener = useCallback((event) => {
-    console.log('cellClicked', event);
-  }, []);
-
-  // Example load data from sever
-  useEffect(() => {
-    fetch('https://www.ag-grid.com/example-assets/row-data.json')
-      .then((result) => result.json())
-      .then((rowData) => setRowData(rowData));
+    console.debug('cellClicked', event);
   }, []);
 
   // Example using Grid's API
   const buttonListener = useCallback((e) => {
     gridRef.current.api.deselectAll();
   }, []);
+
+  const onGridReady = useCallback((params) => {
+    fetchGridAPI();
+  }, []);
+
+  const onFirstDataRendered = useCallback((params) => {
+    gridRef.current.api.sizeColumnsToFit();
+    // gridRef.current.columnApi.autoSizeColumns();
+  }, []);
+
+  // provide Detail Cell Renderer Params
+  const detailCellRendererParams = {
+    // provide the Grid Options to use on the Detail Grid
+    detailGridOptions: {
+      columnDefs: [{ field: 'name', flex: 1 }, { field: 'size' }, { field: 'status' }],
+    },
+    // get the rows for each Detail Grid
+    getDetailRowData: (params) => {
+      params.successCallback(params.data.files);
+    },
+  };
+
+  const fetchGridAPI = () => {
+    try {
+      fetch('/api/grid')
+        .then((response) => response.json())
+        .then((data) => {
+          setRowData(data?.batches);
+        });
+    } catch (ex) {
+      console.debug(ex);
+    }
+  };
 
   return (
     <div>
@@ -46,7 +86,7 @@ const Basic = () => {
       {/* On div wrapping Grid a) specify theme CSS Class Class and b) sets Grid size */}
       <div
         className="ag-theme-alpine"
-        style={{ width: 500, height: 500 }}
+        style={{ width: 'auto', height: '50vh' }}
       >
         <AgGridReact
           ref={gridRef} // Ref for accessing Grid's API
@@ -56,6 +96,10 @@ const Basic = () => {
           animateRows={true} // Optional - set to 'true' to have rows animate when sorted
           rowSelection="multiple" // Options - allows click selection of rows
           onCellClicked={cellClickedListener} // Optional - registering for Grid Event
+          onGridReady={onGridReady}
+          onFirstDataRendered={onFirstDataRendered}
+          masterDetail
+          detailCellRendererParams={detailCellRendererParams}
         />
       </div>
     </div>

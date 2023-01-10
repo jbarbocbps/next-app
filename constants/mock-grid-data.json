@@ -1,0 +1,78 @@
+{
+  "name": "Kevin's Project",
+  "date": "March 12, 2021",
+  "status": "Completed",
+  "client": {
+    "name": "Canon CBPS",
+    "location": "New Amsterdam"
+  },
+  "owner": "Kevin Bacon",
+  "ownerID": "12345678",
+  "count": {
+    "total": 5,
+    "completed": 3
+  },
+  "batches": [
+    {
+      "id": 0,
+      "name": "Batch02-03/14/2021",
+      "status": "Completed",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "Batch03-03/18/2021",
+      "status": "Completed",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "Batch04-03/18/2021",
+      "status": "Processing...",
+      "files": [
+        {
+          "fileID": "052315",
+          "name": "SomeBusiness™ -  Invoice PO-012345",
+          "originalFileName": "POInvoice012345.pdf",
+          "size": "2.42MB",
+          "status": "Processing...",
+          "pageCount": 14,
+          "documentType": "Invoice PO"
+        },
+        {
+          "fileID": "052316",
+          "name": "SomeBusiness™ -  Invoice Non-PO-012345",
+          "originalFileName": "Invoice012345.pdf",
+          "size": "4.26MB",
+          "status": "Completed",
+          "pageCount": 3,
+          "documentType": "Invoice Non-PO"
+        },
+        {
+          "fileID": "052317",
+          "name": "SomeBusiness™ -  Invoice PO-98765",
+          "originalFileName": "Invoice98765.pdf",
+          "size": "5.30MB",
+          "status": "Completed",
+          "pageCount": 3,
+          "documentType": "Invoice PO"
+        },
+        {
+          "fileID": "202258",
+          "name": "SomeBusiness™ -  Invoice PO-202258",
+          "originalFileName": "PO-202258.pdf",
+          "size": "361KB",
+          "status": "Completed",
+          "pageCount": 1,
+          "documentType": "Invoice PO"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Batch05-03/20/2021",
+      "status": "Requires Input...",
+      "files": []
+    }
+  ]
+}
