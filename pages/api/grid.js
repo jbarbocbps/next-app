@@ -1,4 +1,4 @@
-import mockData from '/constants/mock-grid-data.json';
+import mockData from 'constants/mock-grid-data.json';
 
 export default function handler(req, res) {
   try {

@@ -6,15 +6,18 @@ import {
   ActionIcon,
   useMantineColorScheme,
   ScrollArea,
+  Image,
 } from '@mantine/core';
 import { IconSun, IconMoonStars } from '@tabler/icons';
 
 import { MainLinks } from './_mainLinks';
 import { User } from './_user';
-import { Logo } from './_logo';
+
+import CBPSLogo from 'assets/images/cbps-logo.png';
 
 export default function AppShellComponent({ children }) {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+
   return (
     <AppShell
       padding="md"
@@ -44,7 +47,12 @@ export default function AppShellComponent({ children }) {
             px={20}
             position="apart"
           >
-            <Logo colorScheme={colorScheme} />
+            <Image
+              src={CBPSLogo.src}
+              height={50}
+              width="auto"
+              alt="CBPS Logo"
+            />
             <ActionIcon
               variant="default"
               onClick={() => toggleColorScheme()}

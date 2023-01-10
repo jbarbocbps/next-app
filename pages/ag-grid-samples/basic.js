@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
-import { render } from 'react-dom';
 import { AgGridReact } from 'ag-grid-react'; // the AG Grid React Component
 
 import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
@@ -37,7 +36,8 @@ const Basic = () => {
 
   // Example of consuming Grid Event
   const cellClickedListener = useCallback((event) => {
-    console.debug('cellClicked', event);
+    // event.data
+    console.debug('cellClicked', event.data);
   }, []);
 
   // Example using Grid's API
@@ -58,7 +58,12 @@ const Basic = () => {
   const detailCellRendererParams = {
     // provide the Grid Options to use on the Detail Grid
     detailGridOptions: {
-      columnDefs: [{ field: 'name', flex: 1 }, { field: 'size' }, { field: 'status' }],
+      columnDefs: [{ field: 'name' }, { field: 'size' }, { field: 'status' }],
+      defaultColDef: {
+        sortable: true,
+        flex: 1,
+      },
+      onCellClicked: cellClickedListener,
     },
     // get the rows for each Detail Grid
     getDetailRowData: (params) => {
@@ -71,7 +76,9 @@ const Basic = () => {
       fetch('/api/grid')
         .then((response) => response.json())
         .then((data) => {
-          setRowData(data?.batches);
+          setTimeout(() => {
+            setRowData(data?.batches);
+          }, 1000);
         });
     } catch (ex) {
       console.debug(ex);
@@ -95,7 +102,7 @@ const Basic = () => {
           defaultColDef={defaultColDef} // Default Column Properties
           animateRows={true} // Optional - set to 'true' to have rows animate when sorted
           rowSelection="multiple" // Options - allows click selection of rows
-          onCellClicked={cellClickedListener} // Optional - registering for Grid Event
+          // onCellClicked={cellClickedListener} // Optional - registering for Grid Event
           onGridReady={onGridReady}
           onFirstDataRendered={onFirstDataRendered}
           masterDetail
