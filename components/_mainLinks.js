@@ -6,6 +6,8 @@ import Link from 'next/link';
 function MainLink({ icon, color, label, href }) {
   return (
     <UnstyledButton
+      component={Link}
+      href={href}
       sx={(theme) => ({
         display: 'block',
         width: '100%',
@@ -19,10 +21,7 @@ function MainLink({ icon, color, label, href }) {
         },
       })}
     >
-      <Group
-        component={Link}
-        href={href}
-      >
+      <Group>
         <ThemeIcon
           color={color}
           variant="light"

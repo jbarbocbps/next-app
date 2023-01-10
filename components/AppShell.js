@@ -1,4 +1,12 @@
-import { AppShell, Navbar, Header, Group, ActionIcon, useMantineColorScheme } from '@mantine/core';
+import {
+  AppShell,
+  Navbar,
+  Header,
+  Group,
+  ActionIcon,
+  useMantineColorScheme,
+  ScrollArea,
+} from '@mantine/core';
 import { IconSun, IconMoonStars } from '@tabler/icons';
 
 import { MainLinks } from './_mainLinks';
@@ -20,6 +28,7 @@ export default function AppShellComponent({ children }) {
           <Navbar.Section
             grow
             mt="xs"
+            component={ScrollArea}
           >
             <MainLinks />
           </Navbar.Section>
